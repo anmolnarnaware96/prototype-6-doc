@@ -1,144 +1,238 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ANMIS Clinic — Careful care, clearly explained.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com/3.4.17"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.4/babel.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anmis Hospital</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Libre+Franklin:wght@500;600&display=swap">
 <style>
-:root{--ink:#f2f0e9;--muted:rgba(242,240,233,.62);--dim:rgba(242,240,233,.40);--black:#080909;--olive:#8f9b82;--clay:#bf8d6f;--line:rgba(242,240,233,.14);--shell:1200px;--ease:cubic-bezier(.16,1,.3,1)}
-*,*::before,*::after{box-sizing:border-box}
-html{overflow-x:hidden;max-width:100%}main{overflow-x:clip;max-width:100vw}img,video{max-width:100%}h1,h2,h3,p{overflow-wrap:break-word}
-body{margin:0;background:#080909;color:#f2f0e9;overflow-x:hidden;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
-body.menu-open{overflow:hidden}
-.font-display,.hero-h,.menu__link{font-family:Fraunces,serif}
-button,input,textarea{font:inherit;color:inherit}button{transition:transform .16s var(--ease);cursor:pointer}button:active{transform:scale(.97)}
-:focus-visible{outline:2px solid var(--clay);outline-offset:3px;z-index:100}
-.liquid-glass{background:rgba(238,240,226,.055);background-blend-mode:screen;backdrop-filter:blur(10px) saturate(1.12);-webkit-backdrop-filter:blur(10px) saturate(1.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden;isolation:isolate}
-.liquid-glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.2px;pointer-events:none;background:linear-gradient(180deg,rgba(242,240,233,.55),rgba(242,240,233,.05) 30%,rgba(242,240,233,0) 70%,rgba(242,240,233,.35));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
-.film-fill,.hero-film--still,.hero-film--live{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform:translateZ(0);backface-visibility:hidden}
-.hero-film--still{z-index:0}.hero-film--live{z-index:1}
-.hero-veil{position:absolute;left:0;right:0;bottom:0;height:22%;z-index:2;pointer-events:none;background:linear-gradient(to top,#080909,transparent)}
-.nav .menu__cta{display:none}
-.menu{position:fixed;inset:0;z-index:60;background:#070808;opacity:0;visibility:hidden;transform:translateY(-12px);pointer-events:none;transition:opacity .6s var(--ease),transform .6s var(--ease),visibility 0s .6s}
-.menu.is-open{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.menu__row{overflow:hidden}.menu__link{display:block;transform:translateY(115%);transition:transform .8s var(--ease);font-size:2.6rem;background:none;border:0;padding:.15em 0;text-align:left}
-.menu.is-open .menu__link{transform:none}
-.menu .menu__cta{display:inline-flex;opacity:0;transition:opacity .6s .36s}.menu.is-open .menu__cta{opacity:1}
-.hero-h{font-weight:500;letter-spacing:-.035em;line-height:1;font-size:clamp(3rem,6.4vw,6.8rem);text-shadow:0 2px 30px rgba(0,0,0,.55)}
-@media(max-width:640px){.hero-h{font-size:clamp(2.65rem,12vw,4rem)}}
-.wordmark{font-weight:600;letter-spacing:.08em;font-size:14px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:380px){.wordmark{font-size:11px}}
-.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.muted{color:var(--muted)}.clay{color:var(--clay)}
-.field{width:100%;background:transparent;border:1px solid var(--line);border-radius:14px;padding:.75rem 1rem}
-@keyframes hs{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.hs{animation:hs .85s var(--ease) both}
-.rv{transition:opacity .8s var(--ease),transform .8s var(--ease)}
-@media(max-height:700px) and (orientation:landscape){.hero-stage{padding-top:1rem!important;padding-bottom:4.5rem!important}}
-@media(prefers-reduced-motion:reduce){.hs{animation:none}.rv{transition:none}}
-</style></head><body><div id="root"></div>
-<script type="text/babel">
-const {useState,useEffect,useRef,useCallback}=React;
-// >>> EDIT THESE TWO: your real phone number and office address <<<
-const PHONE='+91 00000 00000';
-const ADDRESS=['ANMIS Clinic','Your street address','City, State, PIN code'];
-const TEL='tel:'+PHONE.replace(/[^+\d]/g,'');
-const P_='https://www.pexels.com/download/video/';
-// Swap any of these for a local file (e.g. 'media/hero.mp4') if the Pexels link ever refuses to play.
-const MEDIA={hero:P_+'6998175/',film:P_+'7579331/',fiber:P_+'5892113/',atmos:P_+'5406015/',object:P_+'7423527/'};
-const useReduced=()=>{const[r,setR]=useState(matchMedia('(prefers-reduced-motion: reduce)').matches);useEffect(()=>{const m=matchMedia('(prefers-reduced-motion: reduce)');const f=()=>setR(m.matches);m.addEventListener('change',f);return()=>m.removeEventListener('change',f)},[]);return r};
-function Reveal({children,x=0,y=0,delay=0,className=''}){const ref=useRef(null);const[v,setV]=useState(false);const red=useReduced();
- useEffect(()=>{const o=new IntersectionObserver(([e])=>{if(e.isIntersecting){setV(true);o.disconnect()}},{rootMargin:'-100px'});o.observe(ref.current);return()=>o.disconnect()},[]);
- const on=v||red;return <div ref={ref} className={'rv '+className} style={{opacity:on?1:0,transform:on?'none':`translate(${innerWidth<768?0:x}px,${y}px)`,transitionDelay:delay+'s'}}>{children}</div>}
-const Logo=()=><svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true" className="shrink-0"><path d="M6 10.5C9.4 8.4 12.2 9.1 16 13.2C19.8 9.1 22.6 8.4 26 10.5" stroke="#f2f0e9" strokeWidth="1.35" strokeLinecap="round"/><path d="M7.5 18.2C10.6 16.4 13.1 16.8 16 20.4C18.9 16.8 21.4 16.4 24.5 18.2" stroke="rgba(242,240,233,.72)" strokeWidth="1.2" strokeLinecap="round"/><rect x="14.4" y="22.6" width="3.2" height="3.2" rx=".5" fill="#bf8d6f"/></svg>;
-const Ic=({d,s=17})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d}/></svg>;
-const IC={arrow:'M5 12h14M13 6l6 6-6 6',x:'M6 6l12 12M18 6L6 18',insta:'M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zM12 8a4 4 0 100 8 4 4 0 000-8zM17.5 6.5h.01',vid:'M3 7h12a2 2 0 012 2v6a2 2 0 01-2 2H3zM17 11l4-3v8l-4-3',mail:'M3 6h18v12H3zM3 7l9 7 9-7'};
-function FilmFrame({src,poster,hero,rate=1}){const red=useReduced();const ref=useRef(null);const[st,setSt]=useState('loading');const[pf,setPf]=useState(!poster);
- useEffect(()=>{const v=ref.current;if(!v)return;if(red){v.pause();return}
-  v.loop=true;v.muted=true;v.playsInline=true;v.autoplay=true;v.preload=hero?'auto':'metadata';
-  const sr=()=>{v.playbackRate=rate};sr();let vis=!!hero;const play=()=>{if(vis)v.play().catch(()=>{})};const ok=()=>setSt(s=>s==='error'?s:'ready');
-  const a=()=>{sr();ok();play()},b=()=>{sr();ok()},e=()=>setSt('error');
-  v.addEventListener('canplay',a);v.addEventListener('loadeddata',a);v.addEventListener('playing',b);v.addEventListener('error',e);let io;if(!hero){io=new IntersectionObserver(([en])=>{vis=en.isIntersecting;vis?play():v.pause()},{threshold:.1});io.observe(v)}else play();
-  return()=>{io&&io.disconnect();v.pause();v.removeEventListener('canplay',a);v.removeEventListener('loadeddata',a);v.removeEventListener('playing',b);v.removeEventListener('error',e)}},[red,src]);
- return <div className="absolute inset-0 overflow-hidden bg-[#0d0f0e]">
-  {!pf&&<img src={poster} alt="" className={hero?'hero-film--still':'film-fill'} onError={()=>setPf(true)}/>}
-  {!red&&st!=='error'&&<video ref={ref} src={src} muted playsInline loop autoPlay={!!hero} preload={hero?"auto":"metadata"} aria-label={hero?'Hero background film':undefined} className={hero?'hero-film--live':'film-fill'} style={{opacity:1,zIndex:1}}/>}
-  {hero&&st==='loading'&&!red&&<div role="status" className="absolute inset-0 z-[3] grid place-items-end p-6 eyebrow pointer-events-none">Loading…</div>}
-  {st==='error'&&!pf&&<p role="status" className="absolute bottom-3 left-4 z-[3] text-xs muted">Film unavailable — showing still study.</p>}
-  {st==='error'&&pf&&<div className="absolute inset-0 z-[3] grid place-items-center text-sm muted">Media unavailable</div>}</div>}
-function Dialog({open,onClose,title,children}){const box=useRef(null);
- useEffect(()=>{if(!open)return;const prev=document.activeElement;const q=()=>[...box.current.querySelectorAll('button,input,textarea,a[href]')];setTimeout(()=>q()[0]&&q()[0].focus(),30);
-  const k=e=>{if(e.key==='Escape'){onClose();return}if(e.key!=='Tab')return;const f=q(),a=f[0],z=f[f.length-1];
-   if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}};
-  document.addEventListener('keydown',k);return()=>{document.removeEventListener('keydown',k);prev&&prev.focus&&prev.focus()}},[open,onClose]);
- if(!open)return null;
- return <div className="fixed inset-0 z-[70] grid place-items-center p-4 bg-black/70 backdrop-blur-md" onMouseDown={e=>{if(e.target===e.currentTarget)onClose()}}>
-  <div ref={box} role="dialog" aria-modal="true" aria-label={title} className="liquid-glass rounded-3xl w-full max-w-lg max-h-[88vh] overflow-auto p-6 md:p-8">
-   <div className="flex items-start justify-between gap-4 mb-4"><h2 className="font-display text-2xl md:text-3xl leading-tight">{title}</h2><button onClick={onClose} aria-label="Close dialog" className="liquid-glass rounded-full w-10 h-10 grid place-items-center shrink-0"><Ic d={IC.x} s={16}/></button></div>{children}</div></div>}
-const LINKS=[['About','approach'],['Principles','philosophy'],['Services','services'],['Contact','contact']];
-const INDEX=['General consultation','Diagnosis and tests','Surgical procedures','Dental care','Treatment planning and medication guidance','Follow-up and recovery care'];
-const P=t=><p className="muted">{t}</p>;
-const DLG={index:['Care areas / what we do',<ol className="list-decimal pl-5 space-y-2 muted">{INDEX.map(q=><li key={q}>{q}</li>)}</ol>],
- address:['Our address',<div><address className="not-italic muted space-y-1">{ADDRESS.map(l=><div key={l}>{l}</div>)}</address><a href={TEL} className="inline-block mt-5 clay">{PHONE}</a></div>],archive:['Our channels are coming soon.',P('Nothing external is connected in this demo.')],
- notes:['How we work / listen, diagnose, treat',P('We listen to your concerns, examine and diagnose, then agree a treatment plan with you. This demo has no booking connected. In an emergency, call your local emergency number.')],
- mapping:['Consultation & diagnosis',P('Demo summary: consultations, examinations, and diagnostic guidance with clear next steps. This is general information, not medical advice.')],
- editions:['Surgery, dental & aftercare',P('Demo summary: surgical and dental procedures, medication guidance, and follow-up care. This is general information, not medical advice.')]};
-const CARDS=[{k:'mapping',v:'atmos',tag:'Diagnosis',t:'Consultation & diagnosis',d:'Thorough consultations, examinations, and clear diagnoses, explained in plain language.'},{k:'editions',v:'object',tag:'Treatment',t:'Surgery, dental & aftercare',d:'Surgical and dental procedures, medication guidance, and follow-up support through recovery.'}];
-function App(){
- const red=useReduced();const[dlg,setDlg]=useState(null);const[menu,setMenu]=useState(false);const burger=useRef(null);
- const open=setDlg;const close=useCallback(()=>setDlg(null),[]);const closeMenu=useCallback(()=>{setMenu(false);burger.current&&burger.current.focus()},[]);
- useEffect(()=>{document.body.classList.toggle('menu-open',menu);return()=>document.body.classList.remove('menu-open')},[menu]);
- useEffect(()=>{if(!menu)return;const k=e=>e.key==='Escape'&&closeMenu();const r=()=>innerWidth>900&&closeMenu();addEventListener('keydown',k);addEventListener('resize',r);return()=>{removeEventListener('keydown',k);removeEventListener('resize',r)}},[menu,closeMenu]);
- const go=id=>{setMenu(false);if(id==='contact'){location.href=TEL;return}document.getElementById(id).scrollIntoView({behavior:red?'auto':'smooth'})};
- const H=({d,children,className=''})=><div className={'hs '+className} style={{animationDelay:d+'ms'}}>{children}</div>;
- const t=dlg&&DLG[dlg];
- return <main>
- <section id="top" className="relative flex flex-col min-h-screen min-h-[100svh] overflow-hidden">
-  <FilmFrame hero rate={1.5} src={MEDIA.hero}/><div className="hero-veil"/>
-  <header className="nav relative w-full max-w-[1200px] mx-auto px-6 pt-6" style={{zIndex:menu?65:20}}>
-   <div className="liquid-glass rounded-full pl-4 pr-2 sm:px-6 py-2 sm:py-3 flex items-center justify-between gap-2 sm:gap-3">
-    <div className="flex items-center gap-3 min-w-0"><H d={0}><Logo/></H><H d={70} className="min-w-0"><span className="wordmark block">ANMIS Clinic</span></H></div>
-    <nav aria-label="Primary" className="hidden min-[901px]:flex gap-8">{LINKS.map(([l,id],i)=><H key={id} d={140+i*70}><button onClick={()=>go(id)} className="text-xs uppercase tracking-[.12em] font-medium muted hover:text-[#f2f0e9] bg-transparent border-0">{l}</button></H>)}</nav>
-    <H d={420} className="flex items-center gap-4 shrink-0">
-     <button onClick={()=>open('address')} className="hidden min-[901px]:inline text-xs uppercase tracking-[.12em] muted hover:text-[#f2f0e9] bg-transparent border-0">Address</button>
-     <a href={TEL} className="liquid-glass rounded-full px-5 py-2 text-xs font-medium hidden min-[641px]:inline-flex whitespace-nowrap">Book an appointment</a>
-     <button ref={burger} aria-label={menu?'Close menu':'Open menu'} aria-expanded={menu} aria-controls="menu" onClick={()=>menu?closeMenu():setMenu(true)} className="min-[901px]:hidden w-11 h-11 grid place-items-center bg-transparent border-0">
-      {menu?<Ic d={IC.x} s={22}/>:<span className="flex flex-col items-end gap-[6px]"><span className="block h-px w-[18px] bg-[#f2f0e9]"/><span className="block h-px w-3 bg-[#f2f0e9]"/></span>}</button></H></div></header>
-  <div id="menu" className={'menu flex flex-col justify-center px-8 '+(menu?'is-open':'')} aria-hidden={!menu} inert={menu?undefined:''}>
-   {LINKS.map(([l,id],i)=><div className="menu__row" key={id}><button className="menu__link" style={{transitionDelay:menu?(.12+i*.06)+'s':'0s'}} tabIndex={menu?0:-1} onClick={()=>go(id)}>{l}</button></div>)}
-   <div className="menu__row"><button className="menu__link" style={{transitionDelay:menu?'.36s':'0s'}} tabIndex={menu?0:-1} onClick={()=>{setMenu(false);open('address')}}>Address</button></div>
-   <a href={TEL} className="menu__cta liquid-glass rounded-full px-6 py-3 mt-8 self-start items-center" tabIndex={menu?0:-1} onClick={()=>setMenu(false)}>Book an appointment</a></div>
-  <div className="hero-stage relative z-10 flex flex-1 flex-col items-center justify-center text-center w-full max-w-full px-5 sm:px-6 py-10 pb-24 gap-5">
-   <H d={560}><span className="liquid-glass rounded-3xl sm:rounded-full px-4 py-2 inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs leading-snug uppercase tracking-[.1em] sm:tracking-[.12em] max-w-full text-center"><span className="w-1.5 h-1.5 bg-[#bf8d6f] shrink-0"/>Clinic · Surgery · Patient care</span></H>
-   <H d={700}><h1 className="hero-h">Careful hands for<br className="hidden min-[900px]:block"/> <em className="clay font-normal">every patient.</em></h1></H>
-   <H d={840}><p className="max-w-[620px] text-sm md:text-[17px] muted">ANMIS Clinic offers patient-centred medical and surgical care, with clear explanations, honest advice, and attentive follow-up.</p></H>
-   <H d={1050} className="flex flex-wrap justify-center items-center gap-3"><button onClick={()=>open('index')} className="liquid-glass rounded-full px-6 py-3 text-sm">View care areas</button><button onClick={()=>go('approach')} className="bg-transparent border-0 text-sm muted hover:text-[#f2f0e9] px-3 py-3">About ANMIS</button></H></div>
-  <H d={1120} className="absolute bottom-6 left-0 right-0 z-10 flex justify-center gap-3">
-   {[['Instagram page','insta','archive'],['Video channel','vid','archive'],['Call us','mail','call']].map(([l,i,k])=><button key={l} aria-label={l} onClick={()=>k==='call'?(location.href=TEL):open(k)} className="liquid-glass rounded-full w-[42px] h-[42px] grid place-items-center"><Ic d={IC[i]}/></button>)}</H>
- </section>
- <section id="approach" className="pt-24 md:pt-44 pb-16 px-6" style={{backgroundImage:'radial-gradient(ellipse 70% 42% at 50% 0%, rgba(143,155,130,0.12), transparent 62%)'}}><div className="max-w-[1200px] mx-auto">
-  <Reveal y={24}><p className="eyebrow mb-6">About ANMIS / 01</p></Reveal>
-  <Reveal y={24} delay={.1}><h2 className="font-display text-4xl md:text-7xl leading-[1.04] tracking-tight max-w-4xl">Medical care that is <em className="text-[#d9c3b0]">clear</em>, careful, and built around you.</h2></Reveal>
-  <Reveal y={24} delay={.2}><p className="mt-8 max-w-[650px] muted">ANMIS Clinic is a patient-centred clinic and surgical practice. We take time to listen, explain your options in plain language, and plan treatment together, so you can make informed decisions about your health.</p></Reveal>
-  <Reveal y={24} delay={.3}><div className="mt-12 border-t border-[color:var(--line)] pt-6"><p className="eyebrow mb-4">At a glance / illustrative</p><dl className="grid grid-cols-1 sm:grid-cols-3 gap-6">{[['06','care areas'],['03','steps: listen, diagnose, treat'],['01','care team']].map(([n,l])=><div key={l}><dt className="font-display text-4xl clay">{n}</dt><dd className="text-sm muted">{l}</dd></div>)}</dl></div></Reveal></div></section>
- <section id="films" className="pt-8 md:pt-12 pb-24 md:pb-36 px-6"><Reveal y={60} className="max-w-[1200px] mx-auto"><div className="relative aspect-[4/5] sm:aspect-video rounded-3xl overflow-hidden"><FilmFrame src={MEDIA.film}/>
-  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-[2]"/>
-  <div className="absolute z-[3] inset-x-3 bottom-3 md:inset-x-8 md:bottom-8 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 sm:gap-4">
-   <div className="liquid-glass rounded-2xl md:rounded-3xl w-full sm:w-auto max-w-[470px] p-4 md:p-8"><p className="eyebrow mb-2">Our approach / 02</p><h3 className="font-display text-xl md:text-3xl mb-2">Listening comes first</h3><p className="text-xs md:text-sm muted">Every visit begins with listening. We understand your history and concerns, explain the options and risks, then plan care with you.</p></div>
-   <button onClick={()=>open('notes')} className="liquid-glass rounded-full px-5 py-3 text-xs md:text-sm whitespace-nowrap transition-transform hover:scale-105 motion-reduce:hover:scale-100">How we work</button></div></div></Reveal></section>
- <section id="philosophy" className="py-28 md:py-40 px-6"><div className="max-w-[1200px] mx-auto">
-  <Reveal y={40}><h2 className="font-display text-[2.6rem] sm:text-5xl md:text-8xl tracking-tight mb-10 md:mb-16">Compassion <em className="clay text-[.5em] align-middle mx-2">×</em> Precision</h2></Reveal>
-  <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-   <Reveal x={-40}><div className="relative aspect-[4/3] rounded-3xl overflow-hidden"><FilmFrame src={MEDIA.fiber}/></div></Reveal>
-   <Reveal x={40}>{[['Private and respectful','Your health information is handled with discretion. We explain procedures, options, and next steps plainly, so there are no surprises.'],['Careful and informed','Our clinicians combine attentive examination with clear communication, helping you weigh options and decide with confidence.']].map(([h,p],i)=><div key={h} className={'py-8 '+(i?'border-t border-[color:var(--line)]':'')}><h3 className="font-display text-2xl md:text-3xl mb-3 flex items-center gap-3"><span aria-hidden className="w-2 h-2 bg-[#bf8d6f] shrink-0"/>{h}</h3><p className="muted">{p}</p></div>)}</Reveal></div></div></section>
- <section id="services" className="py-28 md:py-40 px-6" style={{backgroundImage:'radial-gradient(ellipse 60% 40% at 50% 50%, rgba(143,155,130,0.08), transparent 70%)'}}><div className="max-w-[1200px] mx-auto">
-  <Reveal y={30}><div className="flex items-end justify-between mb-12"><h2 className="font-display text-4xl md:text-6xl tracking-tight">Areas of care</h2><span className="eyebrow hidden md:block">Two ways we help</span></div></Reveal>
-  <div className="grid md:grid-cols-2 gap-6">{CARDS.map((c,i)=><Reveal key={c.k} y={50} delay={i*.15}>
-   <div role="button" tabIndex={0} aria-label={'Open '+c.t} onClick={()=>open(c.k)} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(c.k)}}} className="liquid-glass rounded-3xl overflow-hidden group cursor-pointer">
-    <div className="relative aspect-video overflow-hidden"><div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105 motion-reduce:group-hover:scale-100"><FilmFrame rate={c.v==='object'?1.5:1} src={MEDIA[c.v]}/></div></div>
-    <div className="p-6 md:p-8"><span className="eyebrow clay">{c.tag}</span><h3 className="font-display text-2xl md:text-3xl my-2">{c.t}</h3><p className="muted">{c.d}</p></div></div></Reveal>)}</div></div></section>
- <Dialog open={!!t} onClose={close} title={t?t[0]:''}>{t?t[1]:null}</Dialog></main>}
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-</script></body></html>
+:root{--bg:#0d1014;--fg:#f3efe8;--mute:rgba(243,239,232,.68);--line:rgba(243,239,232,.22);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1014;--fg:#f3efe8}}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth}html,body{margin:0;background:var(--bg);color:var(--fg);font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;overflow-x:hidden}
+#stage{position:relative;height:100vh;height:100svh;width:100%;outline:none;touch-action:pan-y}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .5s}
+canvas.on{opacity:1}
+.shade{position:absolute;inset:auto 0 0 0;height:60%;background:linear-gradient(to bottom,transparent,rgba(5,7,10,.72));pointer-events:none}
+.cap{position:absolute;left:clamp(1.25rem,5vw,4rem);bottom:clamp(6.5rem,16vh,9rem);max-width:min(34rem,86vw);z-index:5}
+.cap h1{margin:0;font-weight:500;font-size:clamp(1.8rem,3.8vw,3.1rem);line-height:1.1;letter-spacing:-.01em;transition:opacity .45s}
+.firm{position:absolute;z-index:6;top:calc(env(safe-area-inset-top,0px) + 1rem);left:clamp(1.25rem,5vw,4rem);max-width:min(78vw,60rem);font-size:clamp(2.6rem,9vw,7.5rem);line-height:.95;letter-spacing:-.01em;font-weight:600;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.book{display:inline-block;margin-top:1.4rem;padding:.9rem 1.6rem;border-radius:999px;background:var(--fg);color:#0d1014;font:600 .95rem/1 "Libre Franklin",Helvetica,Arial,sans-serif;letter-spacing:.03em;text-decoration:none;transition:transform .2s,background .2s}
+.book:hover{transform:translateY(-2px);background:#fff}
+.adv{display:block;margin-top:.55rem;font-size:clamp(1.15rem,2.6vw,1.9rem);font-weight:500;letter-spacing:.05em;line-height:1.2;color:var(--mute)}
+.cap p{margin:.9rem 0 0;font-size:clamp(1.15rem,1.8vw,1.4rem);line-height:1.5;color:var(--mute);transition:opacity .45s}
+.cap.out h1,.cap.out p{opacity:0}
+.strip{position:absolute;left:0;right:0;bottom:clamp(1.25rem,4vh,2.25rem);display:flex;gap:.6rem;z-index:6;padding:0 1rem;overflow-x:auto}
+.strip button{flex:none;width:76px;height:48px;padding:0;border:2px solid transparent;border-radius:4px;overflow:hidden;background:none;cursor:pointer;opacity:.55;transition:opacity .2s,border-color .2s}
+.strip button:hover{opacity:.9}
+.strip button[aria-current="true"]{border-color:var(--fg);opacity:1}
+.strip img{display:block;width:100%;height:100%;object-fit:cover}
+.arrow{position:absolute;top:50%;z-index:6;width:46px;height:46px;margin-top:-23px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.1);color:var(--fg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.arrow:hover{background:rgba(255,255,255,.25)}
+.arrow.l{left:clamp(.75rem,3vw,2rem)}.arrow.r{right:clamp(.75rem,3vw,2rem)}
+button:focus-visible,#stage:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.count{position:absolute;top:calc(env(safe-area-inset-top,0px) + 1.25rem);right:clamp(1.25rem,5vw,4rem);z-index:6;font:500 .9rem "Libre Franklin",Helvetica,Arial,sans-serif;color:var(--mute);font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.strip button:first-child{margin-left:auto}.strip button:last-child{margin-right:auto}
+@media (max-width:600px){.strip button{width:56px;height:36px}.arrow{top:44%;width:38px;height:38px;margin-top:-19px}.count{display:none}.firm{font-size:clamp(2.3rem,12.5vw,3.4rem);max-width:90vw}.adv{font-size:1.05rem}.cap{bottom:5.75rem;left:1.25rem;right:1.25rem;max-width:none}.cap h1{font-size:clamp(1.6rem,7vw,2rem)}.book{display:block;text-align:center;padding:1.05rem 1.2rem;margin-top:1.1rem}}
+@media (max-height:520px){.cap p{display:none}.cap{bottom:1.25rem}.strip{display:none}.firm{font-size:clamp(1.8rem,6vw,3rem)}}
+.about{background:#11151b;border-top:1px solid var(--line);padding:clamp(3.5rem,9vw,7rem) clamp(1.25rem,5vw,4rem)}
+.about .in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(1.5rem,5vw,4.5rem);align-items:start}
+.about h2{margin:0;font-weight:600;font-size:clamp(2.6rem,7vw,4.8rem);line-height:1;letter-spacing:-.01em}
+.about .who{display:block;margin-top:.8rem;font-size:clamp(1.15rem,2.2vw,1.5rem);font-weight:500;letter-spacing:.05em;color:var(--mute)}
+.about p{margin:0 0 1.1rem;font-size:clamp(1.2rem,2vw,1.5rem);line-height:1.55;color:rgba(243,239,232,.86)}
+.about ul{list-style:none;margin:1.6rem 0 0;padding:0;display:grid;gap:.9rem;font:500 1rem/1.4 "Libre Franklin",Helvetica,Arial,sans-serif}
+.about li{padding-left:1.6rem;position:relative;color:var(--fg)}
+.about li::before{content:"";position:absolute;left:0;top:.45em;width:.7rem;height:.7rem;border:2px solid var(--fg);border-radius:50%}
+.foot{background:#090c10;border-top:1px solid var(--line);padding:clamp(2.5rem,6vw,4rem) clamp(1.25rem,5vw,4rem) calc(1.5rem + env(safe-area-inset-bottom,0px));text-align:center}
+.foot .links{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem}
+.foot .links a{display:inline-flex;align-items:center;gap:.6rem;padding:.8rem 1.3rem;border:1px solid var(--line);border-radius:999px;color:var(--fg);text-decoration:none;font:500 .95rem/1 "Libre Franklin",Helvetica,Arial,sans-serif;transition:background .2s,border-color .2s}
+.foot .links a:hover{background:rgba(255,255,255,.1);border-color:var(--fg)}
+.foot .links a.primary{background:var(--fg);color:#0d1014;border-color:var(--fg);font-weight:600}
+.foot .links a.primary:hover{background:#fff}
+.foot .copy{margin:2.2rem 0 0;padding-top:1.4rem;border-top:1px solid var(--line);font-size:1.3rem;letter-spacing:.04em;color:var(--mute)}
+a:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+@media (max-width:760px){.about .in{grid-template-columns:1fr}.foot .links a{flex:1 1 100%;justify-content:center;padding:1rem}}
+.btns{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.4rem}
+.btns .book{margin-top:0}
+.book.alt{background:rgba(255,255,255,.12);color:var(--fg);border:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.book.alt:hover{background:rgba(255,255,255,.28)}
+.book[hidden]{display:none}
+@media (max-width:600px){.btns{flex-direction:column;margin-top:1.1rem}}
+</style>
+</head>
+<body>
+<main id="stage" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Hospital photo gallery">
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="shade"></div>
+<div class="count" id="count"></div>
+<div class="firm" id="firm"><span id="fn">Anmis Hospital</span><span class="adv" id="adv">Anmol Narnaware</span></div>
+<div class="cap" id="cap"><h1 id="t"></h1><p id="d"></p><div class="btns"><a class="book" id="book" href="tel:+91XXXXXXXXXX">Book an appointment</a><a class="book alt" id="caseBtn" href="#" target="_blank" rel="noopener" hidden>View details</a></div></div>
+<button class="arrow l" id="prev" aria-label="Previous photo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+<button class="arrow r" id="next" aria-label="Next photo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+<div class="strip" id="strip"></div>
+<span class="sr" id="live" aria-live="polite"></span>
+</main>
+<section class="about" id="about">
+<div class="in">
+<div><h2>About</h2><span class="who" id="aboutWho">Anmol Narnaware</span></div>
+<div>
+<!-- Edit the text below to describe your hospital -->
+<p>We believe good healthcare should be caring, clear and easy to reach. From a routine check-up to treatment that needs ongoing attention, you can expect respectful care and honest answers.</p>
+<p>Every patient is listened to, every record is handled with privacy, and every step of treatment is explained before it is taken.</p>
+<ul>
+<li>Patient-first, compassionate care</li>
+<li>Clear explanations at every step</li>
+<li>Book a consultation with a single call</li>
+</ul>
+</div>
+</div>
+</section>
+<footer class="foot">
+<div class="links">
+<a id="igL" href="https://www.instagram.com/" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+<a id="ytL" href="https://www.youtube.com/" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor" stroke="none"/></svg>YouTube</a>
+<a id="fBook" class="primary" href="tel:+91XXXXXXXXXX"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Book an appointment</a>
+</div>
+<p class="copy" id="copy"></p>
+</footer>
+<script>
+/* ==================== EDIT HERE ====================
+   1) YOUR DETAILS (keep the quote marks) */
+var FIRM_NAME="Anmis Hospital";
+var PERSON_NAME="Anmol Narnaware";
+var INSTAGRAM_URL="https://www.instagram.com/";   /* paste your Instagram page link */
+var YOUTUBE_URL="https://www.youtube.com/";       /* paste your YouTube channel link */
+var PHONE="+91XXXXXXXXXX";   /* with country code, no spaces */
+
+/* 2) YOUR IMAGES, in slide order.
+   To replace a photo, do either of these:
+     a) Overwrite the file inside the "images" folder with your new photo
+        using the same name (image1.jpg, image2.jpg ...), or
+     b) Change the path below to your own file name, or paste a full web link (https://...).
+   Use JPG or PNG. Leave a slot as "" to show a painted landscape instead. */
+var image1="https://images.pexels.com/photos/2324837/pexels-photo-2324837.jpeg";
+var image2="https://images.pexels.com/photos/7108260/pexels-photo-7108260.jpeg";
+var image3="https://images.pexels.com/photos/5215003/pexels-photo-5215003.jpeg";
+var image4="https://images.pexels.com/photos/25205116/pexels-photo-25205116.jpeg";
+var image5="https://images.pexels.com/photos/15277947/pexels-photo-15277947.jpeg";
+var IMAGES=[image1,image2,image3,image4,image5];
+
+/* 3) "VIEW DETAILS" BUTTONS: slide number -> a PDF (for example a brochure or list of services).
+   Put your PDFs in the "cases" folder, or paste a full link (https://...).
+   Delete a line, or leave "", to hide the button on that slide. */
+var CASE_PDFS={2:"https://qps.nhsrcindia.org/sites/default/files/2024-05/National%20Quality%20Assurance%20Standards%202024%20_revised.pdf",3:"https://www.icmr.gov.in/icmrobject/custom_data/pdf/resource-guidelines/Hospital_Infection_control_guidelines.pdf",4:"https://clinicalestablishments.mohfw.gov.in/sites/default/files/2022-06/776.pdf"};
+/* ===================================================== */
+document.getElementById("fn").textContent=FIRM_NAME;
+document.getElementById("adv").textContent=PERSON_NAME;
+document.getElementById("book").href="tel:"+PHONE.replace(/[^0-9+]/g,"");
+document.title=PERSON_NAME+" | "+FIRM_NAME;
+document.getElementById("aboutWho").textContent=PERSON_NAME;
+document.getElementById("igL").href=INSTAGRAM_URL;
+document.getElementById("ytL").href=YOUTUBE_URL;
+document.getElementById("fBook").href=document.getElementById("book").href;
+document.getElementById("copy").textContent="\u00A9 "+new Date().getFullYear()+" "+FIRM_NAME;
+(function(){
+var SCENES=[
+ {n:"Care you can trust",d:"Compassionate, expert medical care for you and your family.",sky:["#1b2a52","#e58a64","#ffd9a0"],sun:[.68,.55,.07,"#fff1cf"],m:["#40476e","#2d3358","#1a1f3d","#0d1024"],stars:.5,s:3},
+ {n:"Our medical team",d:"Doctors, nurses and specialists working together for your recovery.",sky:["#4f9ad8","#a9d6f0","#f6efd7"],sun:[.3,.2,.06,"#ffffff"],m:["#d6b27c","#c09459","#a8763f","#6e4a27"],stars:0,s:7},
+ {n:"Accurate diagnosis",d:"Careful tests and clear results, so treatment can begin without delay.",sky:["#2e6f8f","#8ec5cf","#f2e4bd"],sun:[.5,.38,.05,"#fff8e1"],m:["#5d8296","#3c6074","#274758","#142b38"],stars:0,s:11},
+ {n:"Healing with comfort",d:"Calm, clean and caring spaces designed around the patient.",sky:["#6a2340","#e8613a","#ffc26b"],sun:[.22,.6,.09,"#fff0c4"],m:["#a2452f","#74301f","#46201a","#1f0f12"],stars:0,s:19},
+ {n:"Here when you need us",d:"Easy appointments and kind support for every health need.",sky:["#050813","#10204a","#2c3f7a"],sun:[.74,.22,.035,"#f4f6ff"],m:["#5a6ea3","#2b3a69","#16204a","#080b1c"],stars:1,s:23}
+];
+function rnd(s){return function(){s=(s*16807)%2147483647;return s/2147483647}}
+function paint(sc){
+ var W=1600,H=1000,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+ var g=x.createLinearGradient(0,0,0,H*.75);g.addColorStop(0,sc.sky[0]);g.addColorStop(.6,sc.sky[1]);g.addColorStop(1,sc.sky[2]);x.fillStyle=g;x.fillRect(0,0,W,H);
+ var r=rnd(sc.s);
+ if(sc.stars){for(var i=0;i<260;i++){x.globalAlpha=.25+r()*.75*sc.stars;x.fillStyle="#fff";var q=r()*1.6+.3;x.fillRect(r()*W,r()*H*.55,q,q)}x.globalAlpha=1}
+ var sx=sc.sun[0]*W,sy=sc.sun[1]*H,sr=sc.sun[2]*W;
+ var rg=x.createRadialGradient(sx,sy,sr*.2,sx,sy,sr*7);rg.addColorStop(0,"rgba(255,244,214,.75)");rg.addColorStop(1,"rgba(255,244,214,0)");x.fillStyle=rg;x.fillRect(0,0,W,H);
+ x.fillStyle=sc.sun[3];x.beginPath();x.arc(sx,sy,sr,0,7);x.fill();
+ sc.m.forEach(function(col,k){
+  var base=H*(.5+k*.12),amp=H*(.2-k*.035),p=[r()*6,r()*6,r()*6],f=[1.6+k*.5,3.9+k,9+k*2];
+  x.fillStyle=col;x.beginPath();x.moveTo(0,H);
+  for(var i=0;i<=W;i+=8){var u=i/W;var y=base-amp*(.55+.3*Math.sin(u*f[0]*6.28+p[0])+.15*Math.sin(u*f[1]*6.28+p[1])+.07*Math.sin(u*f[2]*6.28+p[2]));x.lineTo(i,y)}
+  x.lineTo(W,H);x.closePath();x.fill();
+  if(k===0){x.fillStyle="rgba(255,255,255,.12)";x.fillRect(0,base-amp*.2,W,3)}
+ });
+ return c}
+var cv=SCENES.map(paint);var AS=cv.map(function(){return 1.6});
+var el=function(i){return document.getElementById(i)};
+var strip=el("strip");
+SCENES.forEach(function(s,i){var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Show "+s.n);var im=new Image();im.alt="";im.src=cv[i].toDataURL("image/jpeg",.6);b.appendChild(im);b.onclick=function(){go(i)};strip.appendChild(b)});
+
+var N=SCENES.length,active=0,reduced=matchMedia("(prefers-reduced-motion: reduce)").matches,paused=false;
+var canvas=el("gl"),failed=false;
+var gl=canvas.getContext("webgl",{alpha:false,antialias:false});
+var req=null,from=0,to=0,progress=1,startedAt=0,dir=1,U={};
+var DUR=1600,SCALE=3.5,EDGE=.15,DRIFT=.5;
+
+function setText(){
+ var s=SCENES[active];
+ var cap=el("cap");cap.classList.add("out");
+ setTimeout(function(){el("t").textContent=s.n;el("d").textContent=s.d;cap.classList.remove("out")},reduced?0:350);
+ el("count").textContent=(active+1)+" of "+N;var cb=el("caseBtn"),cu=(window.CASE_PDFS||{})[active+1];if(cu){cb.href=cu;cb.hidden=false}else cb.hidden=true;el("live").textContent=s.n+", "+(active+1)+" of "+N;
+ [].forEach.call(strip.children,function(b,i){b.setAttribute("aria-current",i===active)})}
+function go(n){n=((n%N)+N)%N;if(n===active)return;req={from:active,to:n};active=n;setText()}
+el("prev").onclick=function(){go(active-1)};el("next").onclick=function(){go(active+1)};
+setText();el("t").textContent=SCENES[0].n;el("d").textContent=SCENES[0].d;
+
+if(gl){try{
+ var VS="attribute vec2 a;varying vec2 v;void main(){v=a*.5+.5;gl_Position=vec4(a,0.,1.);}";
+ var FS="precision highp float;uniform sampler2D f,t;uniform float p,fa,ta,sc,d,e,dr;uniform vec2 res;varying vec2 v;"+
+ "vec3 pm(vec3 x){return mod(((x*34.)+1.)*x,289.);}"+
+ "float sn(vec2 v){const vec4 C=vec4(.211324865405187,.366025403784439,-.577350269189626,.024390243902439);vec2 i=floor(v+dot(v,C.yy));vec2 x0=v-i+dot(i,C.xx);vec2 i1=(x0.x>x0.y)?vec2(1.,0.):vec2(0.,1.);vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;i=mod(i,289.);vec3 p=pm(pm(i.y+vec3(0.,i1.y,1.))+i.x+vec3(0.,i1.x,1.));vec3 m=max(.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.);m=m*m;m=m*m;vec3 x=2.*fract(p*C.www)-1.;vec3 h=abs(x)-.5;vec3 ox=floor(x+.5);vec3 a0=x-ox;m*=1.79284291400159-.85373472095314*(a0*a0+h*h);vec3 g;g.x=a0.x*x0.x+h.x*x0.y;g.yz=a0.yz*x12.xz+h.yz*x12.yw;return 130.*dot(m,g);}"+
+ "float fbm(vec2 v){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*sn(v);v*=2.;a*=.5;}return s;}"+
+ "vec2 mir(vec2 u){return 1.-abs(1.-mod(u,2.));}"+
+ "vec2 cov(vec2 u,float ia){float ca=res.x/res.y;vec2 s=(ca>ia)?vec2(1.,ia/ca):vec2(ca/ia,1.);return mir((u-.5)*s+.5);}"+
+ "void main(){float adj=p*(1.+2.*e)-e;float n=fbm(v*sc+vec2(0.,p*d))*.5+.5;"+
+ "n=smoothstep(0.,2.,length(texture2D(t,cov(v,ta)).rgb)+n);"+
+ "float mf=1.-smoothstep(adj-e,adj+e,n);"+
+ "vec2 fu=cov(v+vec2(0.,n*p*dr*d),fa);vec2 tu=cov(v+vec2(0.,n*(1.-p)*-.5*dr*d),ta);"+
+ "gl_FragColor=mix(texture2D(f,fu),texture2D(t,tu),mf);}";
+ function sh(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s}
+ var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
+ if(!gl.getProgramParameter(pr,gl.LINK_STATUS))throw new Error("link");
+ gl.useProgram(pr);
+ var bf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,bf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+ var loc=gl.getAttribLocation(pr,"a");gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+ ["f","t","p","fa","ta","sc","d","e","dr","res"].forEach(function(k){U[k]=gl.getUniformLocation(pr,k)});
+ gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+ var tx=cv.map(function(c){var t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,c);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);return t});
+ IMAGES.forEach(function(src,i){if(!src||i>=N)return;var im=new Image();im.crossOrigin="anonymous";im.onload=function(){try{gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.bindTexture(gl.TEXTURE_2D,tx[i]);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,im);AS[i]=im.naturalWidth/Math.max(im.naturalHeight,1);if(strip.children[i])strip.children[i].firstChild.src=src}catch(e){fallback()}};im.onerror=function(){fallback()};im.src=src});
+ var resize=function(){var k=Math.min(devicePixelRatio||1,2),w=Math.round(canvas.clientWidth*k),h=Math.round(canvas.clientHeight*k);if(!w||!h||(canvas.width===w&&canvas.height===h))return;canvas.width=w;canvas.height=h;gl.viewport(0,0,w,h)};
+ new ResizeObserver(resize).observe(canvas);resize();
+ var ease=function(t){t=Math.min(Math.max(t,0),1);return t<.5?16*Math.pow(t,5):1-Math.pow(-2*t+2,5)/2};
+ var frame=function(){if(fbOn)return;
+  if(req){if(req.from!==req.to){from=req.from;to=req.to;progress=0;startedAt=performance.now();dir=((req.to-req.from+N)%N)*2<=N?1:-1}req=null}
+  if(progress<1){var span=reduced?0:DUR;progress=span===0?1:ease((performance.now()-startedAt)/span)}
+  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,tx[from]);gl.uniform1i(U.f,0);
+  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,tx[to]);gl.uniform1i(U.t,1);
+  gl.uniform1f(U.p,progress);gl.uniform2f(U.res,canvas.width,canvas.height);
+  gl.uniform1f(U.fa,AS[from]);gl.uniform1f(U.ta,AS[to]);gl.uniform1f(U.sc,SCALE);gl.uniform1f(U.d,dir);gl.uniform1f(U.e,EDGE);gl.uniform1f(U.dr,DRIFT);
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);requestAnimationFrame(frame)};
+ requestAnimationFrame(frame);canvas.classList.add("on");
+}catch(err){failed=true}}else failed=true;
+
+var fbOn=false;
+function fallback(){ /* plain cross-fade, used if WebGL or the image files cannot be shaded (for example when opening index.html straight from a folder) */
+ if(fbOn)return;fbOn=true;failed=true;var st=el("stage");canvas.remove();
+ IMAGES.forEach(function(s,i){if(s&&strip.children[i])strip.children[i].firstChild.src=s});
+ cv.forEach(function(c,i){var x=c;if(IMAGES[i]){x=new Image();x.src=IMAGES[i];x.alt=""}x.style.cssText="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .8s;opacity:"+(i===active?1:0);x.className="fb";st.insertBefore(x,st.firstChild)});
+ var oldGo=go;go=function(n){oldGo(n);[].forEach.call(document.querySelectorAll(".fb"),function(c,i){c.style.opacity=i===active?1:0})}}
+if(failed)fallback();
+
+// autoplay, keyboard, swipe
+setInterval(function(){if(!reduced&&!paused&&!document.hidden)go(active+1)},5200);
+var stage=el("stage");
+stage.onpointerenter=function(e){if(e.pointerType==="mouse")paused=true};stage.onpointerleave=function(){paused=false};stage.onfocus=function(){if(stage.matches(":focus-visible"))paused=true};stage.onblur=function(){paused=false};
+stage.onkeydown=function(e){if(e.key==="ArrowLeft"){e.preventDefault();go(active-1)}else if(e.key==="ArrowRight"){e.preventDefault();go(active+1)}};
+var sx=null;stage.onpointerdown=function(e){sx=e.clientX};
+stage.onpointerup=function(e){if(sx===null)return;var dx=e.clientX-sx;sx=null;if(Math.abs(dx)>48)go(active+(dx<0?1:-1))};
+})();
+</script>
+</body>
+</html>
